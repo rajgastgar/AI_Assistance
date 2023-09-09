@@ -1,0 +1,4 @@
+1.  Start DB mongodb by using command from administrator cmd 
+	mongod
+2. Start server
+3. Start Client

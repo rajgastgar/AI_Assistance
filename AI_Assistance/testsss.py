@@ -1,13 +1,17 @@
-import os
-import openai
-openai.api_key="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"
-# openai.Model.list()
+import re
+from nltk.tokenize import word_tokenize
 
-response = openai.Completion.create(
-    engine='text-davinci-003',  # Specify the GPT-3 model variant
-    prompt='Who is shivaji',
-    max_tokens=100  # Set the desired length of the generated text
-)
+tradeList = ['trade', 'book']
+enquiryList = ['enquiry','details']
 
-generated_text = response.choices[0].text.strip()
-print(generated_text)
+queryList= ['trade', 'book', 'the']
+
+if __name__ == "__main__":
+    tradeBookRegex = re.compile(r'\b\d{4}:(B|S):(\w{3}/\w{3}):(SPOT|FWD)\b')
+    tradeEnquiryRegex = re.compile(r'\b\d{4}\b')
+    analysisRegex = re.compile(r'(analyse) \b(ctr|ccy|cmrName|valueDate)\b')
+    if(analysisRegex.match("analyse valueDae")):
+        print("Matched")
+        # print(re.split(':', "1234:B:INR/USD:FWD"))
+    else:
+        print("Not matched")

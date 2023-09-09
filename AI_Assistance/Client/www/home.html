@@ -1,210 +1,142 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Trade Booking</title>    
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-    <style>
-      html, body {
-      min-height: 100%;
-      }
-      body, div, form, input, select, p { 
-      padding: 0;
-      margin: 0;
-      outline: none;
-      font-family: Roboto, Arial, sans-serif;
-      font-size: 14px;
-      color: #666;
-      line-height: 22px;
-      }
-      h1 {
-      margin: 15px 0;
-      font-weight: 400;
-      }
-      .testbox {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: inherit;
-      padding: 3px;
-      }
-      form {
-      width: 100%;
-      padding: 20px;
-      background: #fff;
-      box-shadow: 0 2px 5px #ccc; 
-      }
-      input, select, textarea {
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-      }
-      input {
-      width: calc(100% - 10px);
-      padding: 5px;
-      }
-      select {
-      width: 100%;
-      padding: 7px 0;
-      background: transparent;
-      }
-      textarea {
-      width: calc(100% - 6px);
-      }
-      .item {
-      position: relative;
-      margin: 10px 0;
-      }
-      .item:hover p, .item:hover i {
-      color: #095484;
-      }
-      input:hover, select:hover, textarea:hover, .preferred-metod label:hover input {
-      box-shadow: 0 0 5px 0 #095484;
-      }
-      .preferred-metod label {
-      display: block;
-      margin: 5px 0;
-      }
-      .preferred-metod:hover input {
-      box-shadow: none;
-      }
-      .preferred-metod-item input, .preferred-metod-item span {
-      width: auto;
-      vertical-align: middle;
-      }
-      .preferred-metod-item input {
-      margin: 0 5px 0 0;
-      }
-      input[type="date"]::-webkit-inner-spin-button {
-      display: none;
-      }
-      .item i, input[type="date"]::-webkit-calendar-picker-indicator {
-      position: absolute;
-      font-size: 20px;
-      color: #a9a9a9;
-      }
-      .item i {
-      right: 1%;
-      top: 30px;
-      z-index: 1;
-      }
-      [type="date"]::-webkit-calendar-picker-indicator {
-      right: 0;
-      z-index: 2;
-      opacity: 0;
-      cursor: pointer;
-      }
-      .btn-block {
-      margin-top: 20px;
-      text-align: center;
-      }
-      ratebutton {
-      width: 250px;
-      padding: 10px;
-      border: none;      
-      -webkit-border-radius: 3px; 
-      -moz-border-radius: 3px; 
-      border-radius: 3px; 
-      background-color: #12a90a;
-      font-size: 16px;
-      color: #fff;
-      cursor: pointer;
-      }
-      ratebutton:hover {
-      background-color: #12b90a;
-      }
-      button {
-      width: 350px;
-      padding: 10px;
-      border: none;      
-      -webkit-border-radius: 5px; 
-      -moz-border-radius: 5px; 
-      border-radius: 5px; 
-      background-color: #095484;
-      font-size: 16px;
-      color: #fff;
-      cursor: pointer;
-      }
-      button:hover {
-      background-color: #0666a3;
-      }
-      @media (min-width: 568px) {
-      .name-item, .city-item {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      }
-      .name-item input, .city-item input {
-      width: calc(50% - 20px);
-      }
-      .city-item select {
-      width: calc(50% - 8px);
-      }
-      }
-    </style>
-	
-  </head>
-  <body>
-
-    
-    <div class="testbox">
-      <button type="button" id="speakCommand" onclick="giveCommand()" action="home.html">CLICK HERE TO SPEAK</button>            
-    </div>
-    <div class="testbox">
-      <label id="result"></label>
-    </div>
-
-    
-    <div class="testbox">
-      <form action="home.html">
-        <h1>TradeBook</h1>
-        <p>Customer details</p>
-        <div class="item">
-          <p>Customer Name</p>
-          <div class="name-item">
-            <input type="text" name="cmrName" id="cmrName" placeholder="Customer Name" />            
-          </div>
+    <head>
+      
+        <title style="color:red;">Trading Assistance</title>
+        <meta name="theme-color" content="red">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" />
+        <link rel="stylesheet" type="text/css" href="al_assist.css" />
+        <link rel="stylesheet" type="text/css" href="Table.css" />
+        <style></style>
+    </head>
+    <body>        
+        <div class="topPanel">
+            <label id="modeLabel"  class="modeLabel">Voice Mode</label> 
+            <!-- <micbutton id="modeLabel">Speech Mode</micbutton>    -->
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label class="switch">
+                <input type="checkbox" class="checkbox" id="speechCmdMode" />&nbsp;&nbsp;&nbsp;
+                <span class="toggle-thumb">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" style="fill: #4ade80; transform: ; -ms-filter: ;">
+                        <path d="M10 15.586L6.707 12.293 5.293 13.707 10 18.414 19.707 8.707 18.293 7.293z"></path>                           
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" style="fill: #f87171; transform: ; -ms-filter: ;">
+                        <path d="M16.192 6.344L11.949 10.586 7.707 6.344 6.293 7.758 10.535 12 6.293 16.242 7.707 17.656 11.949 13.414 16.192 17.656 17.606 16.242 13.364 12 17.606 7.758z"></path>
+                    </svg>                         
+                </span>
+            </label> 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <micbutton style="font-size:24px" id="micbutton" onclick="giveCommand()"><i class="fa fa-microphone"></i></micbutton> 
+            &nbsp;&nbsp;<label id="result" ></label>      
+        </br>                
         </div>        
-        <div class="item">
-          <p>Financials</p>
-		  <div class="item">
-		  <select name="buySellIndicator" id="buySellIndicator">
-              <option value="0">B/S</option>
-              <option value="1">Buy</option>
-              <option value="2">Sell</option>              
-            </select>
-			<div class="city-item">
-			  <input type="text" name="ccy" id="ccy" placeholder="CCY" />
-			  <input type="text" name="ctr" id="ctr" placeholder="CTR" />			  
-			  <input type="number" name="allInRate" id="allInRate" placeholder="AllInRate" min="0" 
-        max="1000" step="0.01" />	            
-      <ratebutton type="ratebutton" id="getLiveRate" onclick="getLiveRate()">GetLiveRate</ratebutton>	  
-			</div> 
-      <div class="item">
-        <label id="rateResult"></label>
-      </div>
-		  </div>
-        </div>  		
-        <div class="item preferred-metod">          
-          <div class="preferred-metod-item">
-            <label><input type="checkbox" name="isInverted" id="isInverted"> <span>Inv</span></label>
-          </div>
-        </div>  
-		<div class="item">
-          <p>Value Date</p>
-          <input type="date" name="valueDate" id="valueDate" />
-          <i class="fas fa-calendar-alt"></i>
-		</div>		
-        <div class="item">
-          <p>Notes</p>
-          <textarea rows="5"></textarea>
+
+        <div class="testbox" id="TradeBookWindow">
+            <form action="home.html">
+                <div class="item">
+                    <div class="item">
+                        <input type="text" name="cmrName" id="cmrName" placeholder="Customer Name" />
+                    </div>
+                </div>
+                <div class="item">
+                    <p>Financials</p>
+                    <div class="item">
+                        <div class="city-item">
+                            <select name="buySellIndicator" id="buySellIndicator">
+                                <option value="0">B/S</option>
+                                <option value="1">Buy</option>
+                                <option value="2">Sell</option>
+                            </select>
+                            <input type="text" name="ccy" id="ccy" placeholder="CCY" />
+                            <input type="text" name="ccyAmount" id="ccyAmount" placeholder="CCY Amount" />
+                            <input type="number" name="allInRate" id="allInRate" placeholder="AllInRate" min="0" max="1000" step="0.01" />
+
+                            <select name="typeOfTrade" id="typeOfTrade">
+                                <option value="0">Type</option>
+                                <option value="1">Spot</option>
+                                <option value="2">Fwd</option>
+                            </select>
+                            <input type="text" name="ctr" id="ctr" placeholder="CTR" />
+                            <input type="text" name="ctrAmount" id="ctrAmount" placeholder="CTR Amount" />
+                            <ratebutton type="ratebutton" id="getLiveRate" onclick="getLiveRate()">RFQ</ratebutton>
+                        </div>                        
+                    </div>
+                </div>
+                <div class="item preferred-metod">
+                    <div class="preferred-metod-item">
+                        <label><input type="checkbox" name="isInverted" id="isInverted" /> <span>Inv</span></label>
+                    </div>
+                </div>
+                <div class="item">
+                    <p>Value Date</p>
+                    <input type="date" name="valueDate" id="valueDate" />
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="item">
+                    <p>Notes</p>
+                    <textarea rows="5" id="notes" ></textarea>
+                </div>
+                <div class="btn-block">
+                    <button type="button" id="submitTrade">SUBMIT</button>
+                </div>
+            </form>            
         </div>
-        <div class="btn-block">
-          <button type="button" id="submitTrade">SUBMIT</button>
+
+        <div id="TraderBotWindow">
+            <div id="chatborder">
+                <!-- <p id="chatlog28" class="chatlog">&nbsp;</p>
+                <p id="chatlog27" class="chatlog">&nbsp;</p>
+                <p id="chatlog26" class="chatlog">&nbsp;</p>
+                <p id="chatlog25" class="chatlog">&nbsp;</p>
+                <p id="chatlog24" class="chatlog">&nbsp;</p>
+                <p id="chatlog23" class="chatlog">&nbsp;</p>
+                <p id="chatlog22" class="chatlog">&nbsp;</p>
+                <p id="chatlog21" class="chatlog">&nbsp;</p>
+                <p id="chatlog20" class="chatlog">&nbsp;</p>
+                <p id="chatlog19" class="chatlog">&nbsp;</p>
+                <p id="chatlog18" class="chatlog">&nbsp;</p>
+                <p id="chatlog17" class="chatlog">&nbsp;</p>
+                <p id="chatlog16" class="chatlog">&nbsp;</p>
+                <p id="chatlog15" class="chatlog">&nbsp;</p> -->
+                <p id="chatlog14" class="chatlog">&nbsp;</p>
+                <p id="chatlog13" class="chatlog">&nbsp;</p>
+                <p id="chatlog12" class="chatlog">&nbsp;</p>
+                <p id="chatlog11" class="chatlog">&nbsp;</p>
+                <p id="chatlog10" class="chatlog">&nbsp;</p>
+                <p id="chatlog9" class="chatlog">&nbsp;</p>
+                <p id="chatlog8" class="chatlog">&nbsp;</p>
+                <p id="chatlog7" class="chatlog">&nbsp;</p>
+                <p id="chatlog6" class="chatlog">&nbsp;</p>
+                <p id="chatlog5" class="chatlog">&nbsp;</p>
+                <p id="chatlog4" class="chatlog">&nbsp;</p>
+                <p id="chatlog3" class="chatlog">&nbsp;</p>
+                <p id="chatlog2" class="chatlog">&nbsp;</p>
+                <p id="chatlog1" class="chatlog">&nbsp;</p>
+                <input type="text" name="chat" id="chatbox" />
+            </div>            
         </div>
-      </form>
-    </div>    
-    <script type="text/javascript" src="./eel.js"></script>
-    <script type="module" src="./main.js"></script>
-  </body>
+        <div class="testbox">
+            <div class="help-item">
+                <label></label>
+                <label1>CMD Mode</label1>
+                <label1>Voice Mode</label1> 
+                <label>Trade Booking</label>
+                <input type="text" name="tradeBookingCmd" id="tradeBookingCmd"/>
+                <input type="text" name="tradeBookingSpeech" id="tradeBookingSpeech"/>
+                <label>Trade Enquiry</label>
+                <input type="text" name="tradeEnquiryCmd" id="tradeEnquiryCmd"/>
+                <input type="text" name="tradeEnquirySpeech" id="tradeEnquirySpeech"/>
+                <!-- <label>Trade Enquiry - General</label>
+                <input type="text" name="tradeEnquiryGenCmd" id="tradeEnquiryGenCmd"/> -->
+                <button type="button" id="saveCmds">SAVE</button>
+            </div>             
+        </div>
+        
+        <script type="text/javascript" src="./eel.js"></script>
+        <script type="module" src="./chatBot.js"></script>
+        <script type="module" src="./main.js"></script>
+    </body>
 </html>

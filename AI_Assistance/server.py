@@ -1,7 +1,6 @@
 from flask import Flask, jsonify, request
 import os
 import openai
-openai.api_key="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"
 from jproperties import Properties
 import json
 import random
@@ -10,7 +9,8 @@ app = Flask(__name__)
 import constants
 import os
 import sys
-
+from bson.json_util import dumps, loads
+from bson import json_util
 import openai
 from langchain.chains import ConversationalRetrievalChain, RetrievalQA
 from langchain.chat_models import ChatOpenAI
@@ -20,6 +20,9 @@ from langchain.indexes import VectorstoreIndexCreator
 from langchain.indexes.vectorstore import VectorStoreIndexWrapper
 from langchain.llms import OpenAI
 from langchain.vectorstores import Chroma
+import matplotlib.pyplot as plt
+import pandas as pd
+import pymongo
 
 os.environ["OPENAI_API_KEY"] = constants.APIKEY
 
@@ -27,17 +30,58 @@ os.environ["OPENAI_API_KEY"] = constants.APIKEY
 PERSIST = False
 chat_history = []
 
+@app.route('/showAnalysis/<query>')
+def showAnalysis(query):
+    lst_power_production = list(collection.find(filter={}, projection={"_id": 0, "ccy": 1, query: 1}))
+    df_mongo = pd.DataFrame(lst_power_production)
+    # Create DataFrame
+    #df = pd.DataFrame(data)
+    # Count the occurrences of each trade status
+    status_counts = df_mongo[query].value_counts()
+    print(status_counts)
+    # Create bar chart
+    plt.bar(status_counts.index, status_counts.values)
+    # Add labels and title
+    plt.xlabel(query)
+    plt.ylabel('Count')
+    plt.title('Distribution of '+ query)
+    # Display the chart
+    plt.show()
+
+@app.route('/getTradeDetails/<query>')
+def getTradeDetails(query):          
+    myquery = {'tradeId': int(query)}    
+    print(myquery)
+    mydoc = collection.find(myquery)
+    for trade in mydoc:
+        print(trade)
+        # list_cur = list(trade)
+        # Converting to the JSON
+        json_data = parse_json(trade) 
+        print(json_data)
+        return json_data
+    return "Trade id "+query+" not found"
+
+def parse_json(data):
+    return json.loads(json_util.dumps(data))
+
 @app.route('/bookTrade/', methods=['POST'])
 def bookTrade():
     print(request.get_json())
     data = json.loads(request.get_json())
     cmrName = data['cmrName']
-    buySellIndicator = "Bye" if data['buySellIndicator'] == 1 else "Sell"
+    buySellIndicator = "Buy" if data['buySellIndicator'] == 1 else "Sell"
     ccy = data['ccy']
     ctr = data['ctr']      
     allInRate = data['allInRate']
     isInverted = data['isInverted']
     valueDate = data['valueDate']    
+
+    ccyAmount = data['ccyAmount']
+    ctrAmount = data['ctrAmount']
+    notes = data['notes']
+    typeOfTrade = "SPOT" if data['typeOfTrade'] == 1 else "FWD"
+
     tradeId = random.randint(6193279, 6977864)
     data['tradeId'] = tradeId
     updatePropertiesValues(data)
@@ -46,15 +90,22 @@ def bookTrade():
 def updatePropertiesValues(data):    
     configs = Properties()
     configs["cmrName"] = data['cmrName']
-    configs["buySellIndicator"] = data['buySellIndicator'] 
+    configs["buySellIndicator"] = "Buy" if data['buySellIndicator'] == 1 else "Sell"
     configs["ccy"] = data['ccy']
     configs["ctr"] = data['ctr']
     configs["allInRate"] = data['allInRate']
     configs["isInverted"] = "true" if data['isInverted'] == True else "False"
     configs["valueDate"] = data['valueDate']
-    collection.insert_one(data)
+     
+    configs["ccyAmount"] = data['ccyAmount']
+    configs["ctrAmount"] = data['ctrAmount']
+    configs["notes"] = data['notes']
+    configs["typeOfTrade"] = "SPOT" if data['typeOfTrade'] == 1 else "FWD"
+   
     with open("./Client/tradeData.properties", "wb") as f:
         configs.store(f, encoding="utf-8")
+    collection.insert_one(data)
+
 
 @app.route('/getLiveRate/<query>')
 def getLiveRate(query):
@@ -66,7 +117,7 @@ def getInfo(query):
     response = openai.Completion.create(
         engine='text-davinci-003',  # Specify the GPT-3 model variant
         prompt=query,
-        max_tokens=50  # Set the desired length of the generated text
+        max_tokens=20  # Set the desired length of the generated text
     )
     generated_text = response.choices[0].text.strip()
     return generated_text
@@ -107,3 +158,4 @@ if __name__ == "__main__":
     global collection
     collection = my_db.TradeDetails
     app.run(debug=True)
+    

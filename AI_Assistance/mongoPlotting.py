@@ -6,11 +6,11 @@ import pymongo
 
 client = pymongo.MongoClient('mongodb://127.0.0.1:27017/')
 
-mydb=client['Trade']
-tradeinfo = mydb.Trade
+mydb=client['mydb']
+tradeinfo = mydb.TradeDetails
 
 
-lst_power_production = list(tradeinfo.find(filter={}, projection={"_id": 0, "tradeId": 1, "tradeStatus": 1}))
+lst_power_production = list(tradeinfo.find(filter={}, projection={"_id": 0, "ccy": 1, "ctr": 1}))
 
 df_mongo = pd.DataFrame(lst_power_production)
 
@@ -19,7 +19,7 @@ df_mongo = pd.DataFrame(lst_power_production)
 #df = pd.DataFrame(data)
 
 # Count the occurrences of each trade status
-status_counts = df_mongo['tradeStatus'].value_counts()
+status_counts = df_mongo['ctr'].value_counts()
 
 print(status_counts)
 
@@ -27,9 +27,9 @@ print(status_counts)
 plt.bar(status_counts.index, status_counts.values)
 
 # Add labels and title
-plt.xlabel('Trade Status')
+plt.xlabel('CTR')
 plt.ylabel('Count')
-plt.title('Distribution of Trade Status')
+plt.title('Distribution of CTR')
 
 # Display the chart
 plt.show()
